@@ -1,0 +1,91 @@
+console.clear();
+
+var btn = document.querySelector("body > button");
+
+responsiveVoice.speak("Hello I am your Assistance,Please Talk with me.");
+
+var SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+var recognition = new SpeechRecognition();
+
+
+recognition.onstart = function (){
+	console.log("Start Mic");
+}
+
+var greet = ["Hello ,How are you?","Hello,  what's up?","Is it not good???"];
+var weather = ["It is a nice and romantic Weather.","According to me It is a bad day.."]
+
+recognition.onresult = function (event){
+	console.log(event);
+	var msg = (event.results[event.resultIndex][0].transcript);
+	var node = document.createElement("li");                 // Create a <li> node
+	var textnode = document.createTextNode(msg);         // Create a text node
+	node.appendChild(textnode);
+	document.querySelector("body > ul").appendChild(node);
+	if(msg.toUpperCase().includes("HI") || msg.toUpperCase().includes("HELLO")){
+		var index = Math.round(Math.random()*greet.length);
+		var node = document.createElement("li");                 // Create a <li> node
+		var textnode = document.createTextNode(greet[index]);         // Create a text node
+		node.appendChild(textnode);
+		document.querySelector("body > ul").appendChild(node);
+		responsiveVoice.speak(greet[index]);
+	}
+	else if(msg.toUpperCase().includes("HOW ARE YOU")){
+		var node = document.createElement("li");                 // Create a <li> node
+		var textnode = document.createTextNode("I am ok and YOU?");         // Create a text node
+		node.appendChild(textnode);
+		document.querySelector("body > ul").appendChild(node);
+		responsiveVoice.speak("I am ok and YOU?");
+	}
+	else if(msg.toUpperCase().includes("WEATHER")){
+		var index = Math.round(Math.random()*weather.length);
+		var node = document.createElement("li");                 // Create a <li> node
+		var textnode = document.createTextNode(weather[index]);         // Create a text node
+		node.appendChild(textnode);
+		document.querySelector("body > ul").appendChild(node);
+		responsiveVoice.speak(weather[index]);
+	}
+	else if(msg.toUpperCase().includes("TIME")){
+		var node = document.createElement("li");                 // Create a <li> node
+		var textnode = document.createTextNode(new Date());         // Create a text node
+		node.appendChild(textnode);
+		document.querySelector("body > ul").appendChild(node);
+		responsiveVoice.speak("See the Screen");
+	}
+	else if(msg.toUpperCase().includes("NAME"))
+	{
+		var node = document.createElement("li");                 // Create a <li> node
+		var textnode = document.createTextNode("My name is AP2");         // Create a text node
+		node.appendChild(textnode);
+		document.querySelector("body > ul").appendChild(node);
+		responsiveVoice.speak("My name is AP2");
+	}
+	else if(msg.toUpperCase().includes("MAKE") || msg.toUpperCase().includes("CREATE") || msg.toUpperCase().includes("MADE"))
+	{
+		var node = document.createElement("li");                 // Create a <li> node
+		var textnode = document.createTextNode("ANKIT PODDER");         // Create a text node
+		node.appendChild(textnode);
+		document.querySelector("body > ul").appendChild(node);
+		responsiveVoice.speak("ANKIT PODDER");
+	}
+	else if(msg.toUpperCase().includes("AGE") || msg.toUpperCase().includes("OLD"))
+	{
+		var node = document.createElement("li");                 // Create a <li> node
+		var textnode = document.createTextNode("My Age is 1day");         // Create a text node
+		node.appendChild(textnode);
+		document.querySelector("body > ul").appendChild(node);
+		responsiveVoice.speak("My Age is 1day");
+	}
+	else
+	{
+		var node = document.createElement("li");                 // Create a <li> node
+		var textnode = document.createTextNode("I am unable to understand you");         // Create a text node
+		node.appendChild(textnode);
+		document.querySelector("body > ul").appendChild(node);
+		responsiveVoice.speak("I am unable to understand you");
+	}
+}
+
+btn.addEventListener("click",function(){
+	recognition.start();
+});
